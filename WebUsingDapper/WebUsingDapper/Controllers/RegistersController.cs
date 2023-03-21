@@ -33,6 +33,14 @@ namespace WebUsingDapper.Controllers
             return View();
         }
 
+        public async Task<IActionResult> Details(Guid id)
+        {
+            RegisterModel model = new();
+            var sql = "SELECT * FROM UserRegisters WHERE UserID=@UserID";
+            model =await _dapper.connection.QuerySingleAsync<RegisterModel>(sql, new { UserID = id });
+            return View(model);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(RegisterModel register)
         {
