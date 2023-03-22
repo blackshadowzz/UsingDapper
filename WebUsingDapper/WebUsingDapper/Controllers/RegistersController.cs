@@ -28,17 +28,17 @@ namespace WebUsingDapper.Controllers
             return gets.ToList();
         }
 
-        public IActionResult Create()
-        {
-            return View();
-        }
-
         public async Task<IActionResult> Details(Guid id)
         {
             RegisterModel model = new();
             var sql = "SELECT * FROM UserRegisters WHERE UserID=@UserID";
-            model =await _dapper.connection.QuerySingleAsync<RegisterModel>(sql, new { UserID = id });
+            model = await _dapper.connection.QuerySingleAsync<RegisterModel>(sql, new { UserID = id });
             return View(model);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
         }
 
         [HttpPost]
@@ -47,13 +47,16 @@ namespace WebUsingDapper.Controllers
             string sql = @"INSERT INTO UserRegisters(UserID,FirstName,LastName,Email,UserName,Password) 
                             Values(@UserID,@FirstName,@LastName,@Email,@UserName,@Password)";
 
-           register.UserID=Guid.NewGuid();
-
-            var row= await _dapper.connection.ExecuteAsync(sql,register);
-            if (row > 0)
+            register.UserID=Guid.NewGuid();
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("Index");
+                var row = await _dapper.connection.ExecuteAsync(sql, register);
+                if (row > 0)
+                {
+                    return RedirectToAction("Index");
+                }
             }
+
             return View(register);
         }
         public async Task<IActionResult> Edit(Guid id)
@@ -69,11 +72,15 @@ namespace WebUsingDapper.Controllers
             string sql = @"UPDATE UserRegisters SET UserID=@UserID,FirstName=@FirstName,LastName=@LastName,Email=@Email,UserName=UserName,Password=@Password,IsActive=@IsActive where UserID=@UserID";
 
             register.UserID = UserID;
-            var get= await _dapper.connection.ExecuteAsync(sql, register);
-            if (get > 0)
+            if(ModelState.IsValid)
             {
-               return RedirectToAction("Index");
+                var get = await _dapper.connection.ExecuteAsync(sql, register);
+                if (get > 0)
+                {
+                    return RedirectToAction("Index");
+                }
             }
+           
             return View(register);
         }
         [HttpGet]
@@ -81,11 +88,12 @@ namespace WebUsingDapper.Controllers
         {
             
             string sql = "DELETE FROM UserRegisters WHERE UserID=@UserID";
-            //var getOne = GetAll().Result.Where(x=>x.UserID==UserID);
-            //if(getOne == null) return NotFound();
-            await _dapper.connection.ExecuteAsync(sql, new {UserID=id});
+            if(ModelState.IsValid)
+            {
+                await _dapper.connection.ExecuteAsync(sql, new { UserID = id });
+            }
             return RedirectToAction("Index");
-           
+
         }
     }
 }

@@ -4,13 +4,13 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h4>User List</h4>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-outline-primary">Create New</a>
 </p>
 <div>@ViewBag.Msg</div>
-<table class="table">
+<table class="table table-hover shadow">
     <thead>
         <tr>
           @*  <th>
@@ -34,7 +34,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.IsActive)
             </th>
-            <th></th>
+            <th>
+                Actions
+            </th>
         </tr>
     </thead>
     <tbody>
