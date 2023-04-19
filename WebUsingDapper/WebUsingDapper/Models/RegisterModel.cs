@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using WebUsingDapper.Controllers;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebUsingDapper.Models
@@ -7,7 +9,8 @@ namespace WebUsingDapper.Models
     {
         
         public Guid UserID { get; set; }
-        [StringLength(100)]
+        [StringLength(100,MinimumLength =3,ErrorMessage ="FirstName must be 4 characters")]
+        [Required]
         public string FirstName { get; set; }
         [StringLength(100)]
         public string LastName { get; set; }

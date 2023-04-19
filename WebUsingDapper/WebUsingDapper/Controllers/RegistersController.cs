@@ -7,7 +7,7 @@ using WebUsingDapper.Models;
 namespace WebUsingDapper.Controllers
 {
     public class RegistersController : Controller
-    {
+    { 
         private readonly DapperDbContext _dapper;
 
         public RegistersController(DapperDbContext dapper)
@@ -93,6 +93,21 @@ namespace WebUsingDapper.Controllers
                 await _dapper.connection.ExecuteAsync(sql, new { UserID = id });
             }
             return RedirectToAction("Index");
+
+        }
+
+        public JsonResult CheckUsername(string Username)
+        {
+            var user=_dapper.connection.Query<RegisterModel>("Select * From UserRegisters Where UserName=@username",new
+            {
+                @username=Username
+            }).FirstOrDefault();
+
+            if(user!=null)
+            {
+                return Json(data: false);
+            }
+            return Json(data: true);
 
         }
     }

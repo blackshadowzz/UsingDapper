@@ -1,0 +1,53 @@
+﻿@model WebUsingDapper.Models.Leave
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details Leave</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-3">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class = "col-sm-3">
+            @Html.DisplayNameFor(model => model.EmployeeId)
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.EmployeeId)
+        </dd>
+        <dt class = "col-sm-3">
+            @Html.DisplayNameFor(model => model.LeaveDate)
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.LeaveDate)
+        </dd>
+        <dt class = "col-sm-3">
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+        <dt class = "col-sm-3">
+            @Html.DisplayNameFor(model => model.ReasonType)
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.ReasonType)
+        </dd>
+        <dt class = "col-sm-3">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+    </dl>
+</div>
+<div class="d-flex justify-content-between mt-3">
+    @Html.ActionLink("Edit", "Edit", new {  id = Model.Id  })
+    <a asp-action="Index" class="btn btn-outline-info">Back to List</a>
+</div>
